@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form class="d-flex" role="search" th:fragment="searchForm">
+        <input class="form-control me-2" type="search" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Tìm</button>
+    </form>
+</body>
+</html>

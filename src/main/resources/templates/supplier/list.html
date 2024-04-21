@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragment/head::head}">
+</head>
+<body>
+<main>
+    <header th:replace="~{fragment/header::header}"></header>
+    <div class="d-flex">
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+            <form th:replace="~{fragment/searchForm::searchForm}"></form>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a th:href="@{/supplier}" class="nav-link active" aria-current="page">
+                        Danh sách nhà cung cấp
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/supplier/order-invoice}" class="nav-link">
+                        Công nợ
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="b-example-divider"></div>
+        <div class="d-flex flex-column flex-fill">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên nhà cung cấp</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Hotline</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" data-bs-toggle="modal" data-bs-target="#dataModal">
+            Thêm
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="dataModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="dataModalLabel">Thêm nhà cung cấp</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="modal-body d-flex px-4">
+                            <div class="d-flex flex-column flex-fill">
+                                <div class="mb-3">
+                                    <label for="supplierName" class="form-label">Tên nhà cung cấp</label>
+                                    <input name="name" type="text" class="form-control" id="supplierName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Hình ảnh</label>
+                                    <input name="file" type="file" class="form-control" id="file">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="hotline" class="form-label">Hotline</label>
+                                    <input name="hotline" type="tel" class="form-control" id="hotline">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Địa chỉ</label>
+                                    <input name="address" type="text" class="form-control" id="address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input name="email" type="email" class="form-control" id="email">
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column m-4"></div>
+                            <div class="d-flex flex-column flex-fill">
+                                <div class="mb-3">
+                                    <label for="bankName" class="form-label">Tên ngân hàng</label>
+                                    <input type="text" name="bankName" class="form-control" id="bankName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bankAccountNumber" class="form-label">Số tài khoản</label>
+                                    <input type="text" name="bankAccountNumber" class="form-control" id="bankAccountNumber">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bankAccountName" class="form-label">Chủ tài khoản</label>
+                                    <input type="text" name="bankAccountName" class="form-control" id="bankAccountName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Mô tả</label>
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                            <button type="submit" class="btn btn-primary">Xong</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
