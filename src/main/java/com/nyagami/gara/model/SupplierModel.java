@@ -8,7 +8,7 @@ import org.json.JSONObject;
 @Data
 public class SupplierModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String address;
