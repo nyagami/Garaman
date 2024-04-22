@@ -24,7 +24,7 @@ public class AccessoryController {
     private final ImageRepository imageRepository = ImageRepository.getInstance();
     private Page<AccessoryModel> getAccessories(Integer page, String keyword){
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
-        return accessoryRepository.findByNameContaining(keyword, pageable);
+        return accessoryRepository.findByNameOrProductCodeContaining(keyword, keyword, pageable);
     }
     @GetMapping("")
     public String accessoryList(
