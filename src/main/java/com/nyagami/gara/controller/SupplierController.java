@@ -4,6 +4,7 @@ import com.nyagami.gara.model.SupplierModel;
 import com.nyagami.gara.repository.ImageRepository;
 import com.nyagami.gara.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,7 +21,7 @@ public class SupplierController {
     @Autowired
     private SupplierRepository supplierRepository;
     private final ImageRepository imageRepository = ImageRepository.getInstance();
-    private Iterable<SupplierModel> getSuppliers(Integer page, String keyword){
+    private Page<SupplierModel> getSuppliers(Integer page, String keyword){
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
         return supplierRepository.findByNameContaining(keyword, pageable);
     }
@@ -30,7 +31,7 @@ public class SupplierController {
             @RequestParam(defaultValue = "") String keyword,
             Model model
     ){
-        Iterable<SupplierModel> suppliers = getSuppliers(page, keyword);
+        Page<SupplierModel> suppliers = getSuppliers(page, keyword);
         model.addAttribute("suppliers", suppliers);
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
@@ -38,7 +39,7 @@ public class SupplierController {
         return "supplier/list";
     }
     @PostMapping("")
-    public String createSupplier(
+    public String updateSupplier(
             @ModelAttribute SupplierModel supplier,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "") String keyword,
@@ -70,6 +71,6 @@ public class SupplierController {
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
         model.addAttribute("keyword", keyword);
-        return "supplier/list";
+        return "accessory/list";
     }
 }

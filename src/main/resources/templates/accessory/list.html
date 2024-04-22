@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragment/head::head}">
+</head>
+<body>
+<main>
+    <header th:replace="~{fragment/header::header}"></header>
+    <div class="d-flex">
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+            <form th:replace="~{fragment/searchForm::searchForm}"></form>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a th:href="@{/accessory}" class="nav-link active" aria-current="page">
+                        Danh sách linh kiện
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/accessory/import}" class="nav-link">
+                        Nhập linh kiện
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="b-example-divider"></div>
+        <div class="d-flex flex-column flex-fill">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Mã linh kiện</th>
+                    <th scope="col">Tên linh kiện</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Đơn vị</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="obj, it: ${accessories}" onclick="openModal(this)" th:data="${obj}">
+                    <td th:text="${it.index + 1}" />
+                    <td>
+                        <img th:src="${obj.image}">
+                    </td>
+                    <td th:text="${obj.getProductCode()}" />
+                    <td th:text="${obj.getName()}" />
+                    <td th:text="${obj.getQuantity()}" />
+                    <td th:text="${obj.getPrice()}" />
+                    <td th:text="${obj.getUnit()}" />
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" onclick="openModal()">
+            Thêm
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="dataModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="dataModalLabel">Thêm linh kiện</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="modal-body d-flex px-4">
+                            <div class="d-flex flex-column flex-fill">
+                                <input type="hidden" name="id" class="form-control">
+                                <input type="hidden" name="image" class="form-control" >
+                                <div class="mb-3">
+                                    <label for="productCode" class="form-label">Mã linh kiện</label>
+                                    <input name="productCode" required type="text" class="form-control" id="productCode">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="supplierName" class="form-label">Tên linh kiện</label>
+                                    <input name="name" required type="text" class="form-control" id="supplierName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Đơn giá</label>
+                                    <input name="price" required type="tel" class="form-control" id="price">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="unit" class="form-label">Đơn vị</label>
+                                    <input name="unit" type="text" class="form-control" id="unit">
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column m-4"></div>
+                            <div class="d-flex flex-column flex-fill">
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Hình ảnh</label>
+                                    <input name="file" type="file" class="form-control" id="file">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Mô tả</label>
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                                </div>
+                                <div class="mb-3 d-flex">
+                                    <span class="input-group-text text-danger">Xoá linh kiện?</span>
+                                    <div class="input-group-text">
+                                        <input type="checkbox" name="delete" value="true" class="form-check-input form-control" id="delete">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                            <button type="submit" class="btn btn-primary">Xong</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
