@@ -22,10 +22,9 @@ public class SupplierController {
     @Autowired
     private SupplierRepository supplierRepository;
     private final ImageRepository imageRepository = ImageRepository.getInstance();
-    private List<SupplierModel> getSuppliers(Integer page, String keyword){
+    private Iterable<SupplierModel> getSuppliers(Integer page, String keyword){
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
-        List<SupplierModel> suppliers = supplierRepository.findByName(keyword, pageable);
-        return supplierRepository.findByName(keyword, pageable);
+        return supplierRepository.findByNameContaining(keyword, pageable);
     }
     @GetMapping("")
     public String supplierList(
@@ -33,7 +32,7 @@ public class SupplierController {
             @RequestParam(defaultValue = "") String keyword,
             Model model
     ){
-        List<SupplierModel> suppliers = getSuppliers(page, keyword);
+        Iterable<SupplierModel> suppliers = getSuppliers(page, keyword);
         model.addAttribute("suppliers", suppliers);
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
@@ -47,12 +46,19 @@ public class SupplierController {
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam("file") MultipartFile file,
             Model model
-    ) throws IOException {
-        String imageUrl = imageRepository.uploadFile(file);
-        System.out.println(imageUrl);
-        supplier.setImage(imageUrl);
-//        supplierRepository.save(supplier);
-        List<SupplierModel> suppliers = getSuppliers(page, keyword);
+    ) {
+        String imageUrl = "";
+
+        try {
+            imageUrl = imageRepository.uploadFile(file);
+        } catch (IOException e) {
+            imageUrl = "";
+        }
+        if(!imageUrl.isBlank()){
+            supplier.setImage(imageUrl);
+        }
+        supplierRepository.save(supplier);
+        Iterable<SupplierModel> suppliers = getSuppliers(page, keyword);
         model.addAttribute("suppliers", suppliers);
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());

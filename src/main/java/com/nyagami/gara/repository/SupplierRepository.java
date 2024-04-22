@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SupplierRepository extends PagingAndSortingRepository<SupplierModel, Long>, CrudRepository<SupplierModel, Long> {
-    List<SupplierModel> findByName(String name, Pageable pageable);
+public interface SupplierRepository extends CrudRepository<SupplierModel, Long> {
+    List<SupplierModel> findByNameContaining(String name, Pageable pageable);
 }
