@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="obj, it: ${suppliers}">
+                    <tr th:each="obj, it: ${suppliers}" onclick="openModal(this)" th:data="${obj}">
                         <td th:text="${it.index + 1}" />
                         <td th:text="${obj.getName()}" />
                         <td th:text="${obj.getAddress()}" />
@@ -47,7 +47,7 @@
 
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary modal-btn" data-bs-toggle="modal" data-bs-target="#dataModal">
+        <button type="button" class="btn btn-primary modal-btn" onclick="openModal()">
             Thêm
         </button>
 
@@ -62,6 +62,7 @@
                     <form method="post" enctype="multipart/form-data">
                         <div class="modal-body d-flex px-4">
                             <div class="d-flex flex-column flex-fill">
+                                <input type="hidden" name="id" class="form-control">
                                 <div class="mb-3">
                                     <label for="supplierName" class="form-label">Tên nhà cung cấp</label>
                                     <input name="name" required type="text" class="form-control" id="supplierName">
