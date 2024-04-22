@@ -34,6 +34,7 @@ public class SupplierController {
         model.addAttribute("suppliers", suppliers);
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
+        model.addAttribute("keyword", keyword);
         return "supplier/list";
     }
     @PostMapping("")
@@ -68,6 +69,7 @@ public class SupplierController {
         model.addAttribute("suppliers", getSuppliers(page, keyword));
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
+        model.addAttribute("keyword", keyword);
         return "supplier/list";
     }
 }
