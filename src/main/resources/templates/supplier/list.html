@@ -33,6 +33,14 @@
                         <th scope="col">Hotline</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr th:each="obj, it: ${suppliers}">
+                        <td th:text="${it.index + 1}" />
+                        <td th:text="${obj.getName()}" />
+                        <td th:text="${obj.getAddress()}" />
+                        <td th:text="${obj.getHotline()}" />
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
