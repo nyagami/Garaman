@@ -69,6 +69,12 @@ tbody tr:hover {
   background-color: var(--bs-info);
 }
 
+td img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
 .modal-btn {
     position: absolute;
     bottom: 24px;

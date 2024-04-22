@@ -28,6 +28,7 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
+                        <th scope="col">Ảnh</th>
                         <th scope="col">Tên nhà cung cấp</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Hotline</th>
@@ -36,6 +37,9 @@
                 <tbody>
                     <tr th:each="obj, it: ${suppliers}" onclick="openModal(this)" th:data="${obj}">
                         <td th:text="${it.index + 1}" />
+                        <td>
+                            <img th:src="${obj.image}">
+                        </td>
                         <td th:text="${obj.getName()}" />
                         <td th:text="${obj.getAddress()}" />
                         <td th:text="${obj.getHotline()}" />
@@ -63,6 +67,7 @@
                         <div class="modal-body d-flex px-4">
                             <div class="d-flex flex-column flex-fill">
                                 <input type="hidden" name="id" class="form-control">
+                                <input type="hidden" name="image" class="form-control" >
                                 <div class="mb-3">
                                     <label for="supplierName" class="form-label">Tên nhà cung cấp</label>
                                     <input name="name" required type="text" class="form-control" id="supplierName">
@@ -101,6 +106,12 @@
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Mô tả</label>
                                     <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                                </div>
+                                <div class="mb-3 d-flex">
+                                    <span class="input-group-text text-danger">Xoá nhà cung cấp?</span>
+                                    <div class="input-group-text">
+                                        <input type="checkbox" name="delete" value="true" class="form-check-input form-control" id="delete">
+                                    </div>
                                 </div>
                             </div>
                         </div>

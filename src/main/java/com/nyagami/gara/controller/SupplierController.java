@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/supplier")
@@ -38,28 +36,36 @@ public class SupplierController {
         model.addAttribute("supplier", new SupplierModel());
         return "supplier/list";
     }
-
     @PostMapping("")
     public String createSupplier(
             @ModelAttribute SupplierModel supplier,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam("file") MultipartFile file,
+            @RequestParam(name = "delete", required = false) Boolean delete,
             Model model
     ) {
-        String imageUrl = "";
-
-        try {
-            imageUrl = imageRepository.uploadFile(file);
-        } catch (IOException e) {
-            imageUrl = "";
+        if(delete == null){
+            delete = false;
         }
-        if(!imageUrl.isBlank()){
+        if(delete){
+            supplierRepository.delete(supplier);
+        }else{
+            String imageUrl = supplier.getImage();
+            if(!file.isEmpty()){
+                try {
+                    if(!file.isEmpty()){
+                        imageUrl = imageRepository.uploadFile(file);
+                    }
+                } catch (IOException ignored) {}
+            }
+            if(imageUrl == null || imageUrl.isBlank()){
+                imageUrl = "/image/default_supplier.png";
+            }
             supplier.setImage(imageUrl);
+            supplierRepository.save(supplier);
         }
-        supplierRepository.save(supplier);
-        Iterable<SupplierModel> suppliers = getSuppliers(page, keyword);
-        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("suppliers", getSuppliers(page, keyword));
         model.addAttribute("pageTitle", "Nhà cung cấp");
         model.addAttribute("supplier", new SupplierModel());
         return "supplier/list";
