@@ -1,9 +1,7 @@
 package com.nyagami.gara.controller;
 
-import com.nyagami.gara.data.AccessoryOrderStatus;
 import com.nyagami.gara.model.AccessoryModel;
 import com.nyagami.gara.model.AccessoryOrderModel;
-import com.nyagami.gara.model.SupplierModel;
 import com.nyagami.gara.repository.AccessoryOrderRepository;
 import com.nyagami.gara.repository.AccessoryRepository;
 import com.nyagami.gara.repository.ImageRepository;
@@ -83,7 +81,7 @@ public class AccessoryController {
         }
         model.addAttribute("accessories", getAccessories(page, keyword));
         model.addAttribute("pageTitle", "Linh kiện");
-        model.addAttribute("supplier", new SupplierModel());
+        model.addAttribute("accessory", new AccessoryModel());
         model.addAttribute("keyword", keyword);
         return "accessory/list";
     }
